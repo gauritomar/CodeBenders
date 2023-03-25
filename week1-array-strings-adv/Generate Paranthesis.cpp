@@ -1,37 +1,34 @@
 class Solution {
 private:
-    void recursive(vector<vector<int>> &ans, vector<int> &output, vector<int> candidates, int target,int index, int summtillnow){
-        if(summtillnow == target){
-            ans.push_back(output);
-            return;
+    void rec(int n, int val, vector<string> &ans, string s){
+        if(val == 0 && s.size() == 2*n){
+            ans.push_back(s);
         }
-        if(summtillnow > target){
+        
+        if(val > n){
             return ;
         }
-        if(index >= candidates.size()){
+        if(val < 0){
             return ;
         }
-
-        output.push_back(candidates[index]);
-        summtillnow += candidates[index];
-        recursive(ans, output, candidates, target, index+1, summtillnow);
-        output.pop_back();
-        summtillnow -= candidates[index];
-
-        while(index < candidates.size()-1 && candidates[index+1]== candidates[index]){
-            index++;
+        if(s.size()> 2*n){
+            return ;
         }
-        recursive(ans, output, candidates, target, index+1, summtillnow);
-
+        
+        
+        s.push_back('(');
+        rec(n, val+1, ans, s);
+        s.pop_back();
+        s.push_back(')');
+        rec(n, val-1, ans, s);
+        s.pop_back();
 
     }
 public:
-    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
-        vector<vector<int>> ans;
-        vector<int> output;
-        sort(candidates.begin(), candidates.end());
-        recursive(ans, output, candidates, target, 0, 0);
-        
+    vector<string> generateParenthesis(int n) {
+        vector<string> ans;
+        string s;
+        rec(n, 0, ans, s);
         return ans;
     }
 };
