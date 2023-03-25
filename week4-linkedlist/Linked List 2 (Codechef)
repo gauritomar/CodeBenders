@@ -1,0 +1,41 @@
+struct Node {
+	int data;
+	struct Node* next;
+	Node(){
+        next = NULL;
+    }
+	Node(int x){
+		data = x;
+		next = NULL;
+	}
+};
+Node* merge(Node* head1, Node* head2){
+    Node* ans = new Node(0);
+    Node* root = ans;
+    while(head1 && head2){
+        if(head1<=head2){
+            
+            ans->next = new Node(head1->data);
+            head1 = head1->next;
+            ans = ans->next;
+            
+        }
+        else{
+            ans->next = new Node(head1->data);
+            head2 = head2->next;
+            ans = ans->next;
+        }
+    }
+    while(head1){
+        ans->next = new Node(head1->data);
+        ans = ans->next;
+        head1 = head1->next;
+    }
+    while(head2){
+        ans ->next = new Node(head2->data);
+        ans = ans->next;
+        head2 = head2->next;
+    }
+    return root->next;
+    
+}
